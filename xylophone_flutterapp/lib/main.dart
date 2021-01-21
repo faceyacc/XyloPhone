@@ -46,7 +46,7 @@ class XyloPhone extends StatelessWidget {
                 child: null,
               ),
               FlatButton(
-                color: Colors.green[900],
+                color: Colors.teal,
                 onPressed: () {
                   AudioCache().play('note5.wav');
                 },
