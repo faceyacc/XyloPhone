@@ -1,72 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audio_cache.dart';
 
-void main() {
-  runApp(XyloPhone());
-}
+void main() => runApp(XyloPhone());
 
 class XyloPhone extends StatelessWidget {
+  Expanded xyloTile(int tileNumber, Color color, String noteString) {
+    return Expanded(
+      child: FlatButton(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              noteString,
+              style: TextStyle(fontSize: 30, color: Colors.white),
+            ),
+          ],
+        ),
+        color: color,
+        onPressed: () {
+          AudioCache().play('note$tileNumber.wav');
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.black,
         appBar: AppBar(
           title: Text('XyloPhone App'),
           backgroundColor: Colors.black,
         ),
         body: SafeArea(
-          child: Center(
-            child: Column(children: <Widget>[
-              FlatButton(
-                color: Colors.red,
-                onPressed: () {
-                  AudioCache().play('note1.wav');
-                },
-                child: null,
-              ),
-              FlatButton(
-                color: Colors.orange,
-                onPressed: () {
-                  AudioCache().play('note2.wav');
-                },
-                child: null,
-              ),
-              FlatButton(
-                color: Colors.yellow,
-                onPressed: () {
-                  AudioCache().play('note3.wav');
-                },
-                child: null,
-              ),
-              FlatButton(
-                color: Colors.green,
-                onPressed: () {
-                  AudioCache().play('note4.wav');
-                },
-                child: null,
-              ),
-              FlatButton(
-                color: Colors.teal,
-                onPressed: () {
-                  AudioCache().play('note5.wav');
-                },
-                child: null,
-              ),
-              FlatButton(
-                color: Colors.lightBlue,
-                onPressed: () {
-                  AudioCache().play('note6.wav');
-                },
-                child: null,
-              ),
-              FlatButton(
-                color: Colors.purple,
-                onPressed: () {
-                  AudioCache().play('note7.wav');
-                },
-                child: null,
-              ),
-            ]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              xyloTile(1, Colors.red, 'C'),
+              xyloTile(2, Colors.orange, 'D'),
+              xyloTile(3, Colors.yellow, 'E'),
+              xyloTile(4, Colors.green, 'F'),
+              xyloTile(5, Colors.teal, 'G'),
+              xyloTile(6, Colors.lightBlue, 'A'),
+              xyloTile(7, Colors.purple, 'B'),
+            ],
           ),
         ),
       ),
