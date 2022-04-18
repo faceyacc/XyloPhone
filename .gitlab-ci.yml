@@ -1,8 +1,6 @@
 semgrep:
   image: returntocorp/semgrep
-  script: semgrep ci{
-    sendResults ? " --gitlab-sast > gl-sast-report.json || true" : ""
-  }
+  script: semgrep ci
   
   rules:
   - if: $CI_MERGE_REQUEST_IID
