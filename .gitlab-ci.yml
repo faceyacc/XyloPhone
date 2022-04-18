@@ -1,3 +1,21 @@
+semgrep:
+  image: returntocorp/semgrep-agent:v1
+  script:
+    # SEMGREP_APP_TOKEN can be obtained from semgrep.dev/manage/settings.
+    # The SEMGREP_APP_TOKEN should be treated like a secret and not hard-coded into your code.
+    - semgrep-agent --publish-token $SEMGREP_APP_TOKEN
+  rules:
+  # Scan changed files in MRs, block on new issues only (existing issues ignored)
+  - if: $CI_MERGE_REQUEST_IID
+  # Scan all files on default branch, block on any issues
+#   - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+  variables:
+    SEMGREP_AGENT_DEBUG: 1
+    # Gives Semgrep permission to post inline comments
+    GITLAB_TOKEN: $PAT
+
+
 on-pull-requests:
   image: returntocorp/semgrep-agent:v1
   script:
@@ -12,3 +30,6 @@ on-pull-requests:
     SEMGREP_PR_ID: $CI_EXTERNAL_PULL_REQUEST_IID
     SEMGREP_REPO_NAME: $CI_PROJECT_NAME
     SEMGREP_REPO_URL: $CI_PROJECT_URL
+    SEMGREP_JOB_URL: $CI_JOB_URL
+    SEMGREP_COMMIT: $CI_COMMIT_SHA
+    SEMGREP_BRANCH: $CI_EXTERNAL_PULL_REQUEST_SOURCE_BRANCH_NAME
